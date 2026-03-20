@@ -62,10 +62,10 @@ Create a `.env` file in the `backend/` directory:
 
 ```env
 PORT=5001
-MONGO_URI=mongodb://127.0.0.1:27017/nextstepai
-JWT_SECRET=dev-secret-key-12345
+MONGO_URI=yourmongodburl
+JWT_SECRET=yourjwtsecret
 BYPASS_AUTH=true
-GEMINI_API_KEY=AIzaSyCzsGlGnl2hJFNG3DiXQy6ZBXhM_ClP3oM
+GEMINI_API_KEY=yourgeminiapikey
 
 
 
