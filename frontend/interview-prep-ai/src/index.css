@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+
+  body {
+    background-color: #fcfbfc;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom scrollbar styling */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.4);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@layer components {
+  .input-box {
+    @apply w-full flex justify-between gap-3 text-sm text-black bg-gray-50/50 rounded px-4 py-3 mb-4 mt-3 border border-gray-100 outline-none focus-within:border-orange-300;
+  }
+
+  .btn-primary {
+    @apply w-full flex items-center justify-center gap-3 text-sm font-medium text-white bg-black shadow-lg shadow-orange-600/5 p-[10px] rounded-md my-1 hover:bg-orange-600/15 hover:text-black cursor-pointer;
+  }
+
+  .btn-small {
+    /* Updated gradient syntax for Tailwind 3 */
+    @apply flex items-center justify-center gap-3 bg-gradient-to-r from-[#FF9324] to-[#e99a4b] text-sm font-semibold text-white px-7 py-2 rounded-lg hover:bg-black hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-orange-300;
+  }
+}

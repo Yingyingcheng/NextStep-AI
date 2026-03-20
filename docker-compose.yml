@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # --- BACKEND API ---
+  nextstep-api:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: nextstep-api
+    restart: always
+    ports:
+      - "5001:5001"
+    # This automatically loads your MONGO_URI and other secrets from your backend/.env
+    env_file:
+      - ./backend/.env
+    environment:
+      - NODE_ENV=production
+      - PORT=5001
+
+  # --- FRONTEND UI ---
+  nextstep-ui:
+    build:
+      context: ./frontend/interview-prep-ai
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: always
+    ports:
+      - "80:80"
+    # Ensure the API is up before starting the UI
+    depends_on:
+      - nextstep-api
+
+networks:
+  default:
+    name: nextstep-network
