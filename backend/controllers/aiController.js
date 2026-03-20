@@ -6,14 +6,13 @@ const {
 const User = require("../models/User");
 const Session = require("../models/Session");
 
-const { PDFParse } = require("pdf-parse-fork");
+const { PDFParse } = require("pdf-parse");
 const mammoth = require("mammoth");
 
-const parsePdf = async (data) => {
-  const parser = new PDFParse(data);
-  await parser.load();
+const parsePdf = async (buffer) => {
+  const parser = new PDFParse({ data: buffer });
   const result = await parser.getText();
-  parser.destroy();
+  await parser.destroy();
   return result.text || "";
 };
 
@@ -32,14 +31,13 @@ const extractResumeText = async (resumeUrl) => {
     }
 
     const arrayBuf = await response.arrayBuffer();
-    const data = new Uint8Array(arrayBuf);
     const buffer = Buffer.from(arrayBuf);
     console.log("[AI] Resume downloaded, size:", buffer.length, "bytes");
 
     const url = resumeUrl.toLowerCase();
 
     if (url.includes(".pdf")) {
-      const text = await parsePdf(data);
+      const text = await parsePdf(buffer);
       console.log("[AI] PDF parsed, text length:", text.length);
       return text;
     }
@@ -53,7 +51,7 @@ const extractResumeText = async (resumeUrl) => {
     // Cloudinary URLs may not include file extensions — try PDF first, then DOCX
     console.log("[AI] No file extension detected in URL, trying PDF parser...");
     try {
-      const text = await parsePdf(data);
+      const text = await parsePdf(buffer);
       if (text.trim()) {
         console.log("[AI] PDF parsed (no ext), text length:", text.length);
         return text;
